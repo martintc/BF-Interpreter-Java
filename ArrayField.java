@@ -8,10 +8,32 @@ public class ArrayField {
     pointer = 0; // Where the pointer is pointing
   }
   
-  public void moveRight () {
-    pointer++;
+  public boolean moveRight () {
+    if (pointer != array.length) {
+      pointer++;
+    } else {
+      return false;
+    }
   }
-  public void moveLeft () {
+  public boolean moveLeft () {
+    if (pointer != 0) {
+      pointer--;
+    } else {
+      return false;
+    }
+  }
   
+  public boolean incrementValue() {
+    array[pointer]++;
+    return true;
+  }
+  
+  public boolean decrementValue () {
+    if (array[pointer] == 0) {
+      return false;
+    } else {
+      array[pointer] = array[pointer] + 1;
+    }
+  }
   
 }
