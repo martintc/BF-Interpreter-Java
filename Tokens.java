@@ -13,25 +13,26 @@ public enum Tokens {
   ERROR; // End of a Loop
   
   // Takes a char token and returns the token value
-  public Tokens identifyToken (Char t) {
-   switch (t) :
-    case ">" :
+  public static Tokens identifyToken (char t) {
+   switch (t) {
+    case '>' :
       return MOVE_RIGHT;
-    case "<" : 
+    case '<' : 
       return MOVE_LEFT;
-    case "+" :
+    case '+' :
       return INCREMENT;
-    case "-" :
+    case '-' :
       return DECREMENT;
-    case "." :
+    case '.' :
       return PRINT;
     // placeholder for comma operator token
-    case "[" :
+    case '[' :
       return START_LOOP;
-    case "]" :
+    case ']' :
       return END_LOOP;
     default :
       return ERROR;
+  }
   }
 
 }
