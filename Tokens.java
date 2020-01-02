@@ -7,7 +7,7 @@ public enum Tokens {
   INCREMENT, // Increment value at pointer
   DECREMENT, // Decrement value at pointer
   PRINT, // Print current character at pointer location
-  // Comma token to be implemented later
+  INPUT, // Take a single charater input
   START_LOOP, // Start of a loop
   END_LOOP,
   ERROR; // End of a Loop
@@ -25,7 +25,8 @@ public enum Tokens {
       return DECREMENT;
     case '.' :
       return PRINT;
-    // placeholder for comma operator token
+    case ',' :
+      return INPUT;
     case '[' :
       return START_LOOP;
     case ']' :

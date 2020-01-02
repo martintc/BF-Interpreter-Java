@@ -1,57 +1,62 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Interpreter {
     
   // instance variables and datastructures
-  private ArrayField a;
+  private static ArrayField a;
   private Scanner read;
-  
-  public Interpreter () {
+
+  public Interpreter() {
     a = new ArrayField();
   }
-  
-  public void interpretFromTerminal () {
+
+  public void interpretFromTerminal() {
     read = new Scanner(System.in);
     Tokens token;
+    ArrayList<Tokens> loopTokens;
     char program[] = read.nextLine().toCharArray();
-    for (char currentToken : program) { // need to get it to read character by character in an efficient way
+    for (final char currentToken : program) { // need to get it to read character by character in an efficient way
       token = getToken(currentToken);
       checkToken(token, currentToken);
-      if (evaluate(token)) {
-		  System.out.println(a.toString()); // test code
-		  continue;
-	  } else {
-		  System.out.println("Error!");
-	  }
+      if (token == Tokens.START_LOOP) {
+
+      }
+      evaluate(token, program);
+      System.out.println(a.toString());
     }
   }
-    
-  private Tokens getToken (char tokenInput) {
-      Tokens t = Tokens.identifyToken(tokenInput);
-      return t;
+
+  private Tokens getToken(final char tokenInput) {
+    final Tokens t = Tokens.identifyToken(tokenInput);
+    return t;
   }
-    
-    private boolean checkToken(Tokens t, char token) {
-        if (t == Tokens.ERROR) {
-            System.out.println("Error: Token " + token+ " is not a valid token");
-            return false;
-        } else {
-            return true;
-        }
+
+  private boolean checkToken(final Tokens t, final char token) {
+    if (t == Tokens.ERROR) {
+      System.out.println("Error: Token " + token + " is not a valid token");
+      return false;
+    } else {
+      return true;
     }
-    
-    private boolean evaluate (Tokens token) {
+  }
+
+  public static void evaluate(final Tokens token, char program[]) {
 		if (token == Tokens.INCREMENT) {
-			return a.incrementValue();
+      a.incrementValue();
 		} else if (token == Tokens.DECREMENT) {
-			return a.decrementValue();
+      a.decrementValue();
 		} else if (token == Tokens.MOVE_RIGHT) {
-			return a.moveRight();
+      a.moveRight();
 		} else if (token == Tokens.MOVE_LEFT) {
-			return a.moveLeft();
-		} else {
-			return false;
-		}
+      a.moveLeft();
+		} else if (token == Tokens.PRINT) {
+      a.printCharacterAtPointer();
+    } else if (token == Tokens.INPUT) {
+      a.inputCharacterAtIndex();
+    } else {
+      System.out.println("ERROR");
+    }
 	}
   
 }

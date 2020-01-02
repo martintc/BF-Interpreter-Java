@@ -1,3 +1,6 @@
+import java.util.Scanner;
+
+
 public class ArrayField {
   
   private int[] array;
@@ -12,35 +15,56 @@ public class ArrayField {
     pointer = 0; // The location in the array that the program is at
   }
   
-  public boolean moveRight () {
+  public void moveRight () {
     if (pointer != array.length) { // check to see if at end of array
       pointer++;
-      return true;
     } else {
-      return false;
+      System.out.println("ERROR: Reached end of array!");
     }
   }
-  public boolean moveLeft () {
+  public void moveLeft () {
     if (pointer != 0) { // check to see at the array's first index
       pointer--;
-      return true;
     } else {
-      return false;
+      System.out.println("ERROR: At the first index of array, can not move left!");
     }
   }
   
-  public boolean incrementValue() {
+  public void incrementValue() {
     array[pointer]++;
-    return true; 
   }
   
-  public boolean decrementValue () {
+  public void decrementValue () {
     if (array[pointer] == 0) { // check to see if current value is zero, do not allow values lower than zero
-      return false;
+      System.out.println("ERROR: Current index is at zero and will not go below!");
     } else {
       array[pointer]--;
-      return true;
     }
+  }
+
+  public void printCharacterAtPointer () {
+    System.out.println((char) array[pointer]); // prints character at point
+  }
+
+  public void inputCharacterAtIndex () {
+    Scanner scan = new Scanner(System.in);
+    String c = scan.next();
+    if (c.length() > 1) {
+      System.out.println("ERROR: Only one character for input!");
+      scan.close();
+    } else {
+      array[pointer] = (int) c.charAt(0);
+      scan.close();
+    }
+  }
+
+  public void whileLoop (char function[]) {
+      for(int i = 0; i < function.length; i++) {
+        Interpreter.evaluate(Tokens.identifyToken(function[i]));
+      }
+      if (this.array[pointer] != 0) {
+        whileLoop(function);
+      }
   }
   
   public String toString () { // test code
