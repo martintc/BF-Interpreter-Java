@@ -83,6 +83,8 @@ public class Interpreter {
       i.printCharacterAtPointer();
     } else if (token == Tokens.INPUT) {
       i.inputCharacterAtIndex();
+    } else  if (token == Tokens.START_LOOP || token == Tokens.END_LOOP) {
+      // do nothing
     } else {
       System.out.println("ERROR");
     }
