@@ -1,11 +1,12 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 
 public class ArrayField {
   
   private int[] array;
   private int pointer;
-  final int SIZE = 8;
+  final int SIZE = 20;
   
   public ArrayField () {
     array = new int[SIZE]; // standard size for BrainF*ck; can be shortened for made larger
@@ -49,21 +50,24 @@ public class ArrayField {
   public void inputCharacterAtIndex () {
     Scanner scan = new Scanner(System.in);
     String c = scan.next();
-    if (c.length() > 1) {
+    if (c.length() > 1) { // check to see if the length is greater than 1 charcter
       System.out.println("ERROR: Only one character for input!");
       scan.close();
     } else {
-      array[pointer] = (int) c.charAt(0);
+      array[pointer] = (int) c.charAt(0); // Set index pointer in array equal to ASCII value of input character
       scan.close();
     }
   }
 
-  public void whileLoop (char function[]) {
-      for(int i = 0; i < function.length; i++) {
-        Interpreter.evaluate(Tokens.identifyToken(function[i]));
+  public void whileLoop (ArrayList<Tokens> loopTokens, ArrayField a) {
+      for (Tokens t : loopTokens) {
+        // System.out.println(t);
+        Interpreter.evaluate(t, a);
+        System.out.println(this.toString());
       }
       if (this.array[pointer] != 0) {
-        whileLoop(function);
+        // System.out.println(this.array[pointer]); // test code
+        this.whileLoop(loopTokens, a);
       }
   }
   

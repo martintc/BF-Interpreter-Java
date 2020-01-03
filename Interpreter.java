@@ -12,17 +12,27 @@ public class Interpreter {
   }
 
   public void interpretFromTerminal() {
+    System.out.print(">> ");
     read = new Scanner(System.in);
     Tokens token;
-    ArrayList<Tokens> loopTokens;
+    ArrayList<Tokens> loopTokens = new ArrayList<>();
+    boolean inLoop = false;
     char program[] = read.nextLine().toCharArray();
     for (final char currentToken : program) { // need to get it to read character by character in an efficient way
       token = getToken(currentToken);
       checkToken(token, currentToken);
-      if (token == Tokens.START_LOOP) {
-
+      if (token == Tokens.START_LOOP || inLoop == true) {
+        inLoop = true;
+        if (token != Tokens.END_LOOP) {
+          loopTokens.add(token);
+        } else {
+          inLoop = false;
+          a.whileLoop(loopTokens, a);
+          continue;
+        }
+      } else {
+        evaluate(token);
       }
-      evaluate(token, program);
       System.out.println(a.toString());
     }
   }
@@ -41,7 +51,7 @@ public class Interpreter {
     }
   }
 
-  public static void evaluate(final Tokens token, char program[]) {
+  public static void evaluate(Tokens token) {
 		if (token == Tokens.INCREMENT) {
       a.incrementValue();
 		} else if (token == Tokens.DECREMENT) {
@@ -54,6 +64,25 @@ public class Interpreter {
       a.printCharacterAtPointer();
     } else if (token == Tokens.INPUT) {
       a.inputCharacterAtIndex();
+    } else {
+      System.out.println("ERROR");
+    }
+  }
+  
+  // @Override
+  public static void evaluate(Tokens token, ArrayField i) {
+		if (token == Tokens.INCREMENT) {
+      i.incrementValue();
+		} else if (token == Tokens.DECREMENT) {
+      i.decrementValue();
+		} else if (token == Tokens.MOVE_RIGHT) {
+      i.moveRight();
+		} else if (token == Tokens.MOVE_LEFT) {
+      i.moveLeft();
+		} else if (token == Tokens.PRINT) {
+      i.printCharacterAtPointer();
+    } else if (token == Tokens.INPUT) {
+      i.inputCharacterAtIndex();
     } else {
       System.out.println("ERROR");
     }
